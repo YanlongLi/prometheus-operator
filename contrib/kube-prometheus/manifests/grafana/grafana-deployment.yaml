@@ -15,6 +15,7 @@ spec:
       containers:
       - name: grafana
         image: quay.io/coreos/monitoring-grafana:5.0.3
+        args: ["-config=/grafana/conf/myconfig/config.ini"]
         volumeMounts:
         - name: grafana-storage
           mountPath: /data
@@ -24,6 +25,8 @@ spec:
           mountPath: /grafana/conf/provisioning/dashboards
         - name: grafana-dashboard-definitions-0
           mountPath: /grafana-dashboard-definitions/0
+        - name: grafana-config
+          mountPath: /grafana/conf/myconfig
         ports:
         - name: web
           containerPort: 3000
@@ -46,3 +49,6 @@ spec:
       - name: grafana-dashboard-definitions-0
         configMap:
           name: grafana-dashboard-definitions-0
+      - name: grafana-config
+        configMap:
+          name: grafana-config
